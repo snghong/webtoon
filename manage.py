@@ -3,6 +3,13 @@
 import os
 import sys
 
+import openai
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 def main():
     """Run administrative tasks."""
