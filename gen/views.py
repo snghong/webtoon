@@ -35,9 +35,9 @@ def get_details(request):
         if form.is_valid():
             # Using the data from form.cleaned_data:
 
-            # TODO: 1. save the user's characters and context in the database
+            # TODO: 1. save the user's characters and context in the database (call .save())
 
-            # TODO: 2. call text gen API and save the user's story in the database
+            # TODO: 2. call text gen API and save the user's story in the database (call .save()
 
             # redirect to show story
             return render(request, "gen/story.html", {})
