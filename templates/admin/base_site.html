@@ -1,9 +1,9 @@
 {% extends "admin/base.html" %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Polls site admin') }}{% endblock %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Webtoon site admin') }}{% endblock %}
 
 {% block branding %}
-<div id="site-name"><a href="{% url 'admin:index' %}">Polls Administration</a><div>
+<div id="site-name"><a href="{% url 'admin:index' %}">Webtoon Administration</a><div>
 {% endblock %}
 
 
