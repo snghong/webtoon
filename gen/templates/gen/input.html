@@ -1,0 +1,25 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'gen/style.css' %}">
+<p>Create characters here</p>
+<form action="gen/get_details/" method="post">
+    <label for="location">Location: </label>
+    <input id="location" type="text" name="location" value="{{ current_location}}">
+    <br>
+    <label for="details">Details </label>
+    <input id="details" type="text" name="details" value="{{ current_details }}">
+    <br>
+    <label for="character1name">character 1 name: </label>
+    <input id="character1name" type="text" name="character1name" value="">
+    <br>
+    <label for="character1details">Details: </label>
+    <input id="character1details" type="text" name="character1details" value="">
+    <br>
+    <label for="character2name">character 2 name: </label>
+    <input id="character2name" type="text" name="character2name" value="">
+    <br>
+    <label for="character2details">Details: </label>
+    <input id="character2details" type="text" name="character2details" value="">
+    <br>
+    <input type="submit" value="OK">
+</form>

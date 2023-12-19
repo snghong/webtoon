@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from gen.forms import WebtoonForm
 from gen.models import *
 from django.contrib.auth.models import User
 
@@ -14,40 +15,51 @@ from django.contrib.auth.decorators import login_required
 
 from django.utils.decorators import method_decorator
 
-@method_decorator(login_required, name='dispatch')
-class HomeView(generic.ListView):
-    user = User
-    template_name = "gen/home.html"
+def home(request):
+    context = {}
+    return render(request, "gen/home.html", context)
 
 
-@method_decorator(login_required, name='dispatch')
-class HomeView(generic.ListView):
-    user = User
-    template_name = "gen/home.html"
+# take user input for characters and context, then generate story
+def input(request):
+    context = {}
+    return render(request, "gen/input.html", context)
 
-@method_decorator(login_required, name='dispatch')
-class CharactersView(generic.DetailView):
-    user = User
-    template_name = "gen/characters.html"
+# user form POST endpoint
+def get_details(request):
+    # if this is a POST request we need to process the form data
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = WebtoonForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # Using the data from form.cleaned_data:
 
-@method_decorator(login_required, name='dispatch')
-class StoryView(generic.DetailView):
-    user = User
-    template_name = "gen/story.html"
+            # TODO: 1. save the user's characters and context in the database
 
-@method_decorator(login_required, name='dispatch')
-class SegmentsView(generic.ListView):
-    user = User
-    story = Story
-    template_name = "gen/segments.html"
+            # TODO: 2. call text gen API and save the user's story in the database
 
-@method_decorator(login_required, name='dispatch')
-class ImagesView(generic.ListView):
-    user = User
-    story = Story
-    template_name = "gen/images.html"
+            # redirect to show story
+            return render(request, "gen/story.html", {})
 
-@method_decorator(login_required, name='dispatch')
-class WebtoonView(generic.ListView):
-    user = User
-    template_name = "gen/webtoon.html"
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = WebtoonForm()
+    return render(request, "gen/characters.html", {"form": form})
+# display story
+def story(request):
+    context = {}
+    return render(request, "gen/story.html", context)
+
+def segments(request):
+    context = {}
+    return render(request, "gen/segments.html", context)
+
+def images(request):
+    context = {}
+    return render(request, "gen/images.html", context)
+
+def webtoon(request):
+    context = {}
+    return render(request, "gen/webtoon.html", context)
+
