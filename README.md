@@ -20,3 +20,9 @@
 Django
 SQLite
 Python
+
+## Running the server
+- From the root directory, run python3 manage.py runserver
+- Create a user / Login as needed
+- Enter your desired story settings at /gen/input
+- View webtoon
