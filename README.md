@@ -1,4 +1,4 @@
-## Text to webtoon generator project.
+## Text to webtoon generator project
 - Design document and milestones available here: https://docs.google.com/document/d/1MplfSnmNXhZZkV8tL8orX0uP6eUbevGm_luDP45rl4A/edit?usp=sharing
 
 ## Contributing:
@@ -17,9 +17,9 @@
 - LLM APIs for queries
 
 ## Dependencies
-Django
-SQLite
-Python
+- Django
+- SQLite
+- Python
 
 ## Running the server
 - From the root directory, run python3 manage.py runserver
