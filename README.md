@@ -5,7 +5,8 @@
 - pick a milestone
 - git pull / git clone
 - git branch
-- git merge
+- build your milestone
+- make a Pull Request :>
 
 ## Authors: 
 - Sng Hong
@@ -34,3 +35,13 @@
 - Create a user / Login as needed
 - Enter your desired story settings at /gen/input
 - View webtoon
+
+## Setting up the server
+- Sign up with a new user account from the root page
+- create a superuser (admin) account for yourself with `python3 manage.py createsuperuser`
+- Access the admin dashboard by clicking on 'Admin Login' from the root page
+
+## Database Migrations
+- Create or update the model
+- Create a DB migration: `python manage.py makemigrations`
+- Apply the migration: `python manage.py migrate`
