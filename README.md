@@ -44,4 +44,4 @@
 ## Database Migrations
 - Create or update the model
 - Create a DB migration: `python manage.py makemigrations`
-- Apply the migration: `python manage.py migrate`
+- Apply the migration: `python manage.py migrate --run-syncdb`

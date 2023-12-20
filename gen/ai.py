@@ -1,5 +1,7 @@
 import logging
-import openai
+from openai import OpenAI
+API_KEY = "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"
+client = OpenAI(api_key = API_KEY)
 
 MODEL = 'gpt-3.5-turbo'
 
@@ -25,13 +27,11 @@ def get_ai_generated_story(location, details, character1name, character1details,
                                character2name, character2details, minWordCount=10, maxWordCount=1000):
     messages = get_openai_gen_story_messages(location, details, character1name, character1details,
                                              character2name, character2details, minWordCount, maxWordCount)
-    response = openai.ChatCompletion.create(
-        model=MODEL,
-        messages=messages,
-        temperature=0.7,
-    )
-    openai_response = response['choices'][0]['message']['content']
+    response = client.chat.completions.create(model=MODEL,
+    messages=messages,
+    temperature=0.7)
+    openai_response = response.choices[0].message.content
 
     logging.info(f"OpenAI response: {openai_response}")
-
+    # TODO: Verify that the query returns a valid text result (instead of Invalid Query)
     return openai_response

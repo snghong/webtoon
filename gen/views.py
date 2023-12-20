@@ -23,14 +23,11 @@ def home(request):
 
 
 # take user input for characters and context, then generate story
-def input(request):
-    context = {}
-    return render(request, "gen/input.html", context)
-
 # user form POST endpoint
-def get_details(request):
+def input(request):
     # if this is a POST request we need to process the form data
     if request.method == "POST":
+        print("received POST request")
         # create a form instance and populate it with data from the request:
         form = WebtoonForm(request.POST)
         # check whether it's valid:
@@ -44,23 +41,36 @@ def get_details(request):
             character2name = form.cleaned_data['character2name']
             character2details = form.cleaned_data['character2details']
 
-            # TODO: 1. save the user's characters and context in the database (call .save())
+            # save the user's characters and context in the database
+            user = request.user
+            user.save()
+            context = Context(location = location, user = user, details = details)
+            character1 = Character(user = user, name = character1name, details = character1details)
+            character2 = Character(user = user, name = character2name, details = character2details)
+            context.save()
+            character1.save()
+            character2.save()
 
             # call text gen API
             ai_story = get_ai_generated_story(location, details, character1name, character1details,
                                                    character2name, character2details)
-            # TODO: save generated story to database
+            story = Story(user = user , title = "webtoon", text = ai_story)
 
+            # save generated story to database
+            story.save()
             # redirect to show story
-            return render(request, "gen/story.html", {})
-
+            return render(request, "gen/story.html", {'story': ai_story})
+        else:
+            print(f"FORM ERRORS: {form.errors}")
+            print("form was not valid...")
     # if a GET (or any other method) we'll create a blank form
     else:
         form = WebtoonForm()
-    return render(request, "gen/characters.html", {"form": form})
+    return render(request, "gen/input.html", {"form": form})
+
 # display story
 def story(request):
-    context = {}
+    context = {'story': request.user.story}
     return render(request, "gen/story.html", context)
 
 def segments(request):

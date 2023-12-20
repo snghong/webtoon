@@ -5,7 +5,6 @@ app_name = "gen"
 urlpatterns = [
     path("", views.home, name="home"),
     path("input/", views.input, name="input"), # get user input
-    path("get_details/", views.get_details, name="get_details"), # POST endpoint
     path("story/", views.story, name="story"), # for viewing stories
     path("segments/", views.segments, name="segments"), # for viewing story segments
     path("images/", views.images, name="images"), # for viewing story images
