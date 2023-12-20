@@ -22,7 +22,6 @@
 - SQLite
 - Python
 - openAI
-- python-dotenv
 
 ## Set-Up
 1. Run `python3 -m venv env` to create a virtual environment called "env"
@@ -42,6 +41,7 @@
 - Access the admin dashboard by clicking on 'Admin Login' from the root page
 
 ## Database Migrations
+- Delete any existing db.sqlite3 files or __pycache__ folders
 - Create or update the model
 - Create a DB migration: `python manage.py makemigrations`
 - Apply the migration: `python manage.py migrate --run-syncdb`
