@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="{% static 'gen/style.css' %}">
 <p>Create characters here</p>
-<form action="gen/get_details/" method="post">
+<form action="/gen/get_details/" method="post">
     <label for="location">Location: </label>
     <input id="location" type="text" name="location" value="{{ current_location}}">
     <br>

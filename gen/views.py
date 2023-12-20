@@ -8,6 +8,8 @@ from gen.forms import WebtoonForm
 from gen.models import *
 from django.contrib.auth.models import User
 
+from gen.ai import get_ai_generated_story
+
 # TODO
 
 from django.contrib.auth import authenticate, login
@@ -34,10 +36,20 @@ def get_details(request):
         # check whether it's valid:
         if form.is_valid():
             # Using the data from form.cleaned_data:
+            # TODO: see if we want to add other fields like genre
+            location = form.cleaned_data['location']
+            details = form.cleaned_data['details']
+            character1name = form.cleaned_data['character1name']
+            character1details = form.cleaned_data['character1details']
+            character2name = form.cleaned_data['character2name']
+            character2details = form.cleaned_data['character2details']
 
             # TODO: 1. save the user's characters and context in the database (call .save())
 
-            # TODO: 2. call text gen API and save the user's story in the database (call .save()
+            # call text gen API
+            ai_story = get_ai_generated_story(location, details, character1name, character1details,
+                                                   character2name, character2details)
+            # TODO: save generated story to database
 
             # redirect to show story
             return render(request, "gen/story.html", {})
