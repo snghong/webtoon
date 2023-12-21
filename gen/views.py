@@ -1,11 +1,11 @@
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
-
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from gen.forms import WebtoonForm
 from gen.models import *
+from gen.segmentation import *
 from django.contrib.auth.models import User
 
 from gen.ai import get_ai_generated_story
@@ -70,11 +70,26 @@ def input(request):
 
 # display story
 def story(request):
-    context = {'story': request.user.story}
+    stories = Story.objects.filter(user = request.user)
+    context = {}
+    if len(stories) > 0:
+        context['story'] = stories[len(stories)-1].text
     return render(request, "gen/story.html", context)
 
 def segments(request):
+    stories = Story.objects.filter(user = request.user)
     context = {}
+    story = None
+    if len(stories) > 0:
+        story = stories[len(stories)-1]
+    if story:
+        segments = create_segments(story.text)
+        for text in segments:
+            segment = Segment(text = text, story = story)
+            segment.save()
+        story.num_panels = len(segments)
+        story.save()
+        context = {'segments': segments, 'num_segments': len(segments)}
     return render(request, "gen/segments.html", context)
 
 def images(request):
