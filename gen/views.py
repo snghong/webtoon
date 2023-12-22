@@ -102,11 +102,11 @@ def images(request):
     if story:
         segments = Segment.objects.filter(story = story)
         for segment in segments:
-            segment.image = generate_image(segment.text)
+            segment.image = generate_image(segment.text) # populate URL
             segment.save()
         story.num_panels = len(segments)
         story.save()
-        context = {'images':images, 'num_panels': story.num_panels}
+        context = {'segments':segments, 'num_panels': story.num_panels}
     return render(request, "gen/images.html", context)
 
 def webtoon(request):

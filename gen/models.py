@@ -36,7 +36,7 @@ class Story(models.Model):
 class Segment(models.Model):
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
-    image = models.ImageField('img', upload_to=f'images/')
+    image = models.CharField(max_length=200)
     pub_date =  models.DateTimeField(default=timezone.now)
 
     def __str__(self):
