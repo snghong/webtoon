@@ -25,7 +25,7 @@ class Context(models.Model):
 
 class Story(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=20, default=user.name)
     text = models.CharField(max_length = 800)
     num_panels = models.IntegerField(default=4)
     pub_date =  models.DateTimeField(default=timezone.now)
@@ -36,7 +36,7 @@ class Story(models.Model):
 class Segment(models.Model):
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
-    image = models.ImageField()
+    image = models.ImageField('img', upload_to=f'images/')
     pub_date =  models.DateTimeField(default=timezone.now)
 
     def __str__(self):

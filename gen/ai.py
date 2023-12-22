@@ -1,7 +1,9 @@
 import logging
+import os
+from dotenv import load_dotenv
 from openai import OpenAI
-API_KEY = "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"
-client = OpenAI(api_key = API_KEY)
+load_dotenv()
+client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 
 MODEL = 'gpt-3.5-turbo'
 

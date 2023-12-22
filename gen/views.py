@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from gen.forms import WebtoonForm
+from gen.image import generate_image
 from gen.models import *
 from gen.segmentation import *
 from django.contrib.auth.models import User
@@ -54,7 +55,7 @@ def input(request):
             # call text gen API
             ai_story = get_ai_generated_story(location, details, character1name, character1details,
                                                    character2name, character2details)
-            story = Story(user = user , title = "webtoon", text = ai_story)
+            story = Story(user = user , text = ai_story)
 
             # save generated story to database
             story.save()
@@ -93,7 +94,19 @@ def segments(request):
     return render(request, "gen/segments.html", context)
 
 def images(request):
+    stories = Story.objects.filter(user = request.user)
     context = {}
+    story = None
+    if len(stories) > 0:
+        story = stories[len(stories)-1]
+    if story:
+        segments = Segment.objects.filter(story = story)
+        for segment in segments:
+            segment.image = generate_image(segment.text)
+            segment.save()
+        story.num_panels = len(segments)
+        story.save()
+        context = {'images':images, 'num_panels': story.num_panels}
     return render(request, "gen/images.html", context)
 
 def webtoon(request):
