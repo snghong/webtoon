@@ -9,6 +9,7 @@ client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 
 
 def text_to_prompt(text):
+    print(text)
     # TODO: parse text into prompt
     return "wooper"
 
