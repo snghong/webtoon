@@ -55,7 +55,7 @@ def input(request):
             # call text gen API
             ai_story = get_ai_generated_story(location, details, character1name, character1details,
                                                    character2name, character2details)
-            story = Story(user = user , text = ai_story)
+            story = Story(user = user , text = ai_story, title = f"{character1name} and {character2name}'s story")
 
             # save generated story to database
             story.save()
@@ -101,9 +101,14 @@ def images(request):
         story = stories[len(stories)-1]
     if story:
         segments = Segment.objects.filter(story = story)
-        for segment in segments:
-            segment.image = generate_image(segment.text) # populate URL
-            segment.save()
+        for segment in segments[:5]: # DALL-E Free Tier max 5 queries / min
+            
+            if segment.image == '':
+                print(f"Generating image for text:{segment.text}")
+                # generate image if we haven't yet
+                segment.image = generate_image(segment.text) # populate URL
+                # print(f"Saved image URL as {segment.image}")
+                segment.save()
         story.num_panels = len(segments)
         story.save()
         context = {'segments':segments, 'num_panels': story.num_panels}
