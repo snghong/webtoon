@@ -1,6 +1,5 @@
 from typing import List
 import spacy
-from gen.models import *
 
 nlp = spacy.load("en_core_web_sm")
 # semantic segmentation: https://spacy.io/usage/linguistic-features#vectors-similarity
@@ -34,6 +33,6 @@ def split_text(text: str) -> List[str]:
   similarity_threshold = 0.33
   return group_sentences_semantically(sentences, similarity_threshold)
 
-def create_segments(text:str) -> List[Segment]:
+def create_segments(text):
     semantic_segments = split_text(text)
     return semantic_segments
